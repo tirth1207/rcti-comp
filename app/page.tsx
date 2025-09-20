@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { BookOpen, Users, Calendar, FileText, Award, MessageSquare } from "lucide-react"
+import { BookOpen, Users, Calendar, FileText, Award, MessageSquare, ArrowRight, Star, TrendingUp } from "lucide-react"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -17,101 +18,142 @@ export default async function HomePage() {
   const quickLinks = [
     {
       title: "Course Materials",
-      description: "Access notes, presentations, and study materials",
+      description: "Access comprehensive notes, presentations, and study materials",
       icon: BookOpen,
       href: "/course-materials",
       color: "text-blue-600",
+      bgColor: "bg-blue-50",
     },
     {
       title: "Faculty Directory",
-      description: "Meet our experienced faculty members",
+      description: "Meet our experienced and dedicated faculty members",
       icon: Users,
       href: "/faculty",
       color: "text-green-600",
+      bgColor: "bg-green-50",
     },
     {
       title: "Events Gallery",
-      description: "View photos from department events",
+      description: "Explore photos and highlights from department events",
       icon: Calendar,
       href: "/events",
       color: "text-purple-600",
+      bgColor: "bg-purple-50",
     },
     {
       title: "Student Corner",
-      description: "Important notices and announcements",
+      description: "Important notices, announcements, and student resources",
       icon: FileText,
       href: "/student-corner",
       color: "text-orange-600",
+      bgColor: "bg-orange-50",
     },
     {
       title: "Newsletter",
-      description: "Stay updated with department news",
+      description: "Stay updated with the latest department news and updates",
       icon: Award,
       href: "/newsletter",
       color: "text-red-600",
+      bgColor: "bg-red-50",
     },
     {
       title: "Feedback",
-      description: "Share your thoughts and suggestions",
+      description: "Share your valuable thoughts and suggestions with us",
       icon: MessageSquare,
       href: "/feedback",
       color: "text-indigo-600",
+      bgColor: "bg-indigo-50",
     },
+  ]
+
+  const stats = [
+    { label: "Students Enrolled", value: "500+", icon: Users },
+    { label: "Faculty Members", value: "25+", icon: Star },
+    { label: "Research Projects", value: "15+", icon: TrendingUp },
+    { label: "Industry Partners", value: "30+", icon: Award },
   ]
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary to-secondary text-white py-20">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-secondary text-white py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute inset-0 bg-[url('/abstract-tech-pattern.png')] opacity-5"></div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">Computer Science Department</h1>
-            <p className="text-xl md:text-2xl mb-8 text-balance max-w-3xl mx-auto">
-              Empowering the next generation of technology leaders through innovative education and cutting-edge
-              research
+            <Badge variant="secondary" className="mb-6 bg-white/20 text-white border-white/30">
+              Excellence in Computer Science Education
+            </Badge>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance leading-tight">
+              Computer Science
+              <span className="block text-secondary-foreground">Department</span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-balance max-w-4xl mx-auto leading-relaxed opacity-90">
+              Empowering the next generation of technology leaders through innovative education, cutting-edge research,
+              and industry collaboration
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link href="/course-materials">
-                <Button size="lg" variant="secondary">
+                <Button size="lg" variant="secondary" className="group">
                   Explore Programs
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link href="/contact">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                  className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
                 >
                   Contact Us
                 </Button>
               </Link>
             </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <stat.icon className="h-8 w-8 mx-auto mb-2 text-secondary-foreground" />
+                  <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
+                  <div className="text-sm opacity-80">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="py-16 bg-card">
+      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl">Our Vision</CardTitle>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Foundation</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Built on strong principles that guide our educational excellence
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card className="border-2 hover:shadow-xl transition-all duration-300 group">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <Star className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-2xl md:text-3xl">Our Vision</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   To be a leading center of excellence in computer science education, fostering innovation, research,
                   and technological advancement that contributes to society's digital transformation.
                 </p>
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl">Our Mission</CardTitle>
+            <Card className="border-2 hover:shadow-xl transition-all duration-300 group">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
+                  <TrendingUp className="h-6 w-6 text-secondary" />
+                </div>
+                <CardTitle className="text-2xl md:text-3xl">Our Mission</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-lg leading-relaxed">
                   To provide comprehensive computer science education, conduct impactful research, and prepare students
                   to become ethical technology leaders who can solve complex global challenges.
                 </p>
@@ -121,27 +163,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Quick Links */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Quick Access</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Find what you need quickly with our organized resource sections
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Quick Access</h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Navigate through our comprehensive resources designed to support your academic journey
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {quickLinks.map((link) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {quickLinks.map((link, index) => (
               <Link key={link.title} href={link.href}>
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                      <link.icon className={`h-8 w-8 ${link.color} group-hover:scale-110 transition-transform`} />
-                      <CardTitle className="text-xl">{link.title}</CardTitle>
+                <Card className="h-full hover:shadow-xl transition-all duration-300 cursor-pointer group border-2 hover:border-primary/20">
+                  <CardHeader className="pb-4">
+                    <div
+                      className={`w-14 h-14 ${link.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                    >
+                      <link.icon className={`h-7 w-7 ${link.color}`} />
                     </div>
+                    <CardTitle className="text-xl group-hover:text-primary transition-colors">{link.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription>{link.description}</CardDescription>
+                    <CardDescription className="text-base leading-relaxed">{link.description}</CardDescription>
+                    <div className="flex items-center mt-4 text-primary group-hover:translate-x-2 transition-transform">
+                      <span className="text-sm font-medium">Learn more</span>
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </div>
                   </CardContent>
                 </Card>
               </Link>
@@ -150,32 +197,48 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Latest Announcements */}
       {newsletters && newsletters.length > 0 && (
-        <section className="py-16 bg-card">
+        <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Latest Announcements</h2>
-              <p className="text-muted-foreground">Stay updated with the latest news from our department</p>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Latest Announcements</h2>
+              <p className="text-muted-foreground text-lg">
+                Stay updated with the latest news and updates from our department
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {newsletters.map((newsletter) => (
-                <Card key={newsletter.id}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {newsletters.map((newsletter, index) => (
+                <Card key={newsletter.id} className="hover:shadow-lg transition-all duration-300 border-2">
                   <CardHeader>
-                    <CardTitle className="text-lg">{newsletter.title}</CardTitle>
+                    <Badge variant="outline" className="w-fit mb-2">
+                      {index === 0 ? "Latest" : "Recent"}
+                    </Badge>
+                    <CardTitle className="text-xl leading-tight">{newsletter.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="mb-4">{newsletter.description}</CardDescription>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(newsletter.created_at).toLocaleDateString()}
-                    </p>
+                    <CardDescription className="mb-4 text-base leading-relaxed">
+                      {newsletter.description}
+                    </CardDescription>
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(newsletter.created_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                      <ArrowRight className="h-4 w-4 text-primary" />
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
-            <div className="text-center mt-8">
+            <div className="text-center mt-12">
               <Link href="/newsletter">
-                <Button variant="outline">View All Newsletters</Button>
+                <Button variant="outline" size="lg" className="group bg-transparent">
+                  View All Newsletters
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </Link>
             </div>
           </div>
