@@ -9,10 +9,10 @@ export default async function CourseMaterialsPage() {
   const supabase = await createClient()
 
   const { data: materials, error } = await supabase
-    .from("course_materials")
+    .from("subjects")
     .select("*")
     .order("semester", { ascending: true })
-    .order("subject", { ascending: true })
+     .order("name", { ascending: true })
 
   if (error) {
     console.error("Error fetching course materials:", error)
@@ -64,8 +64,8 @@ export default async function CourseMaterialsPage() {
                           <div className="flex items-start space-x-3">
                             <BookOpen className="h-5 w-5 text-primary mt-1" />
                             <div className="flex-1">
-                              <CardTitle className="text-lg">{material.subject}</CardTitle>
-                              <CardDescription className="font-medium">{material.title}</CardDescription>
+                              <CardTitle className="text-lg">{material.name}</CardTitle>
+                              <CardDescription className="font-medium">{material.code}</CardDescription>
                             </div>
                           </div>
                           <div className="flex space-x-1">

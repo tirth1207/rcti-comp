@@ -13,15 +13,23 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
 export function Navigation() {
   const academicSections = [
-    {
-      title: "Course Materials",
-      description: "Access notes, presentations, and study materials",
-      href: "/course-materials",
-    },
+    // {
+    //   title: "Course Materials",
+    //   description: "Access notes, presentations, and study materials",
+    //   href: "/course-materials",
+    // },
     {
       title: "Faculty Directory",
       description: "Meet our experienced faculty members",
@@ -48,11 +56,23 @@ export function Navigation() {
       href: "/feedback",
     },
   ]
+  const CourseSections = [
+  { title: "Semester 1 (Old)", slug: "semester-1-old" },
+  { title: "Semester 1 (NEP)", slug: "semester-1-nep" },
+  { title: "Semester 2 (Old)", slug: "semester-2-old" },
+  { title: "Semester 2 (NEP)", slug: "semester-2-nep" },
+  { title: "Semester 3 (Old)", slug: "semester-3-old" },
+  { title: "Semester 3 (NEP)", slug: "semester-3-nep" },
+  { title: "Semester 4", slug: "semester-4" },
+  { title: "Semester 5", slug: "semester-5" },
+  { title: "Semester 6", slug: "semester-6" },
+]
+
 
   return (
     <section className="py-4 bg-background border-b border-border sticky top-0 z-50">
-      <div className="container">
-        <nav className="flex items-center justify-between">
+      <div className="container mx-auto">
+        <nav className="flex items-center mx-auto justify-between">
           <Link href="/" className="flex items-center gap-2">
             <GraduationCap className="h-8 w-8 text-primary" />
             <span className="text-lg font-semibold tracking-tighter">Computer Department</span>
@@ -60,6 +80,20 @@ export function Navigation() {
 
           <NavigationMenu className="hidden lg:block">
             <NavigationMenuList>
+              <DropdownMenu>
+                <DropdownMenuTrigger>Course Materials</DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {CourseSections.map((section, index) => (
+                    <Link
+                      key={index}
+                      href={`/course-materials/${section.slug}`}
+                      className="block w-full px-4 py-2 text-sm hover:bg-muted/70"
+                    >
+                      {section.title}
+                    </Link>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Academic</NavigationMenuTrigger>
                 <NavigationMenuContent>
