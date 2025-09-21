@@ -123,7 +123,42 @@ export function Navigation() {
 
               {/* Academic Dropdown */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200",
+                    )}
+                  >
+                    Academic
+                    <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 shadow-lg border-border/50">
+                    {/* <DropdownMenuLabel className="text-primary font-medium">Select Semester</DropdownMenuLabel> */}
+                    {/* <DropdownMenuSeparator /> */}
+                    <div className="grid w-56 grid-cols-1 p-4 gap-3">
+                    {academicSections.map((section) => (
+                      <NavigationMenuLink key={section.href} asChild>
+                        <Link
+                          href={section.href}
+                          className={cn(
+                            "block select-none space-y-1 rounded-lg p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground group border border-transparent hover:border-border/50",
+                            pathname === section.href && "bg-accent/50 text-accent"
+                          )}
+                        >
+                          <div className="text-sm font-medium text-foreground leading-none group-hover:text-primary transition-colors ">
+                            {section.title}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground dark:text-muted-foreground">
+                            {section.description}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    ))}
+                  </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {/* <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
                   Academic
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -147,7 +182,7 @@ export function Navigation() {
                       </NavigationMenuLink>
                     ))}
                   </div>
-                </NavigationMenuContent>
+                </NavigationMenuContent> */}
               </NavigationMenuItem>
 
               {/* Contact Link */}

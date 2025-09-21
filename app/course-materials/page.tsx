@@ -15,7 +15,7 @@ export default function CourseMaterialsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
           {AVAILABLE_SEMESTERS.map((semester) => (
             <Link key={semester.slug} href={`/course-materials/${semester.slug}`}>
               <Card className="h-full hover:shadow-xl transition-all duration-300 cursor-pointer group border-2 hover:border-primary/20">
