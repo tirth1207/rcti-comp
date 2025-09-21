@@ -4,6 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { BookOpen, Users, Calendar, FileText, Award, MessageSquare, ArrowRight, Star, TrendingUp } from "lucide-react"
+import { Hero } from "@/components/hero"
+import { Feature74 } from "@/components/vision"
+import { Feature16 } from "@/components/mission"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -72,57 +75,7 @@ export default async function HomePage() {
     { label: "Research Projects", value: "15+", icon: TrendingUp },
     { label: "Industry Partners", value: "30+", icon: Award },
   ]
-
-  return (
-    <div className="min-h-screen">
-      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-secondary text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute inset-0 bg-[url('/abstract-tech-pattern.png')] opacity-5"></div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Badge variant="secondary" className="mb-6 bg-white/20 text-white border-white/30">
-              Excellence in Computer Science Education
-            </Badge>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance leading-tight">
-              Computer Science
-              <span className="block text-secondary-foreground">Department</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-balance max-w-4xl mx-auto leading-relaxed opacity-90">
-              Empowering the next generation of technology leaders through innovative education, cutting-edge research,
-              and industry collaboration
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/course-materials">
-                <Button size="lg" variant="secondary" className="group">
-                  Explore Programs
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
-                >
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <stat.icon className="h-8 w-8 mx-auto mb-2 text-secondary-foreground" />
-                  <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
-                  <div className="text-sm opacity-80">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+{/* <section className="py-20 bg-gradient-to-b from-background to-muted/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Foundation</h2>
@@ -130,38 +83,69 @@ export default async function HomePage() {
               Built on strong principles that guide our educational excellence
             </p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <Card className="border-2 hover:shadow-xl transition-all duration-300 group">
-              <CardHeader className="pb-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Star className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle className="text-2xl md:text-3xl">Our Vision</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  To be a leading center of excellence in computer science education, fostering innovation, research,
-                  and technological advancement that contributes to society's digital transformation.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="border-2 hover:shadow-xl transition-all duration-300 group">
+            <div className="flex flex-col gap-12">
+
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+
+              <Card className="flex-1 border-2 hover:shadow-xl transition-all duration-300 group order-2 lg:order-1">
               <CardHeader className="pb-4">
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
-                  <TrendingUp className="h-6 w-6 text-secondary" />
+                <TrendingUp className="h-6 w-6 text-secondary" />
                 </div>
                 <CardTitle className="text-2xl md:text-3xl">Our Mission</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  To provide comprehensive computer science education, conduct impactful research, and prepare students
-                  to become ethical technology leaders who can solve complex global challenges.
+                To provide comprehensive computer science education, conduct impactful research, and prepare students
+                to become ethical technology leaders who can solve complex global challenges.
                 </p>
               </CardContent>
-            </Card>
-          </div>
+              </Card>
+
+              <div className="flex-1 flex justify-center order-1 lg:order-2">
+              <img
+                src="/mission-illustration.png"
+                alt="Mission Illustration"
+                className="w-full max-w-xs rounded-xl shadow-lg"
+                loading="lazy"
+              />
+              </div>
+            </div>
+
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+
+              <div className="flex-1 flex justify-center order-1">
+              <img
+                src="/vision-illustration.png"
+                alt="Vision Illustration"
+                className="w-full max-w-xs rounded-xl shadow-lg"
+                loading="lazy"
+              />
+              </div>
+
+              <Card className="flex-1 border-2 hover:shadow-xl transition-all duration-300 group order-2">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <Star className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle className="text-2xl md:text-3xl">Our Vision</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                To be a leading center of excellence in computer science education, fostering innovation, research,
+                and technological advancement that contributes to society's digital transformation.
+                </p>
+              </CardContent>
+              </Card>
+            </div>
+            </div>
         </div>
-      </section>
+      </section> */}
+  return (
+    <div className="min-h-screen w-full">
+      <Hero />
+      <Feature16 />
+      
 
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -172,7 +156,7 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {quickLinks.map((link, index) => (
+            {quickLinks.map((link) => (
               <Link key={link.title} href={link.href}>
                 <Card className="h-full hover:shadow-xl transition-all duration-300 cursor-pointer group border-2 hover:border-primary/20">
                   <CardHeader className="pb-4">

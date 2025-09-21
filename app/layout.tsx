@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 import { GeistSans, GeistMono } from "geist/font"
 import "./globals.css"
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const geistSans = GeistSans
 const geistMono = GeistMono
@@ -21,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navigation />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

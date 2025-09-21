@@ -22,11 +22,12 @@ import { useState } from "react"
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Newsletters", href: "/admin/newsletters", icon: FileText },
-  { name: "Course Materials", href: "/admin/course-materials", icon: BookOpen },
+  { name: "Subjects", href: "/admin/subjects", icon: BookOpen },
   { name: "Student Corner", href: "/admin/student-corner", icon: Bell },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Faculty", href: "/admin/faculty", icon: Users },
   { name: "Feedback", href: "/admin/feedback", icon: MessageSquare },
+  
 ]
 
 interface AdminNavigationProps {

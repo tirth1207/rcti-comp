@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { GraduationCap, MenuIcon } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import {
   NavigationMenu,
@@ -25,11 +26,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 
 export function Navigation() {
   const academicSections = [
-    // {
-    //   title: "Course Materials",
-    //   description: "Access notes, presentations, and study materials",
-    //   href: "/course-materials",
-    // },
     {
       title: "Faculty Directory",
       description: "Meet our experienced faculty members",
@@ -56,18 +52,20 @@ export function Navigation() {
       href: "/feedback",
     },
   ]
-  const CourseSections = [
-  { title: "Semester 1 (Old)", slug: "semester-1-old" },
-  { title: "Semester 1 (NEP)", slug: "semester-1-nep" },
-  { title: "Semester 2 (Old)", slug: "semester-2-old" },
-  { title: "Semester 2 (NEP)", slug: "semester-2-nep" },
-  { title: "Semester 3 (Old)", slug: "semester-3-old" },
-  { title: "Semester 3 (NEP)", slug: "semester-3-nep" },
-  { title: "Semester 4", slug: "semester-4" },
-  { title: "Semester 5", slug: "semester-5" },
-  { title: "Semester 6", slug: "semester-6" },
-]
 
+  const semesters = [
+    { title: "Semester 1 (Old)", number: 1, type: "old" },
+    { title: "Semester 1 (NEP)", number: 1, type: "nep" },
+    { title: "Semester 2 (Old)", number: 2, type: "old" },
+    { title: "Semester 2 (NEP)", number: 2, type: "nep" },
+    { title: "Semester 3 (Old)", number: 3, type: "old" },
+    { title: "Semester 3 (NEP)", number: 3, type: "nep" },
+    { title: "Semester 4", number: 4, type: "regular" },
+    { title: "Semester 5", number: 5, type: "regular" },
+    { title: "Semester 6", number: 6, type: "regular" },
+    { title: "Semester 7", number: 7, type: "regular" },
+    { title: "Semester 8", number: 8, type: "regular" },
+  ]
 
   return (
     <section className="py-4 bg-background border-b border-border sticky top-0 z-50">
@@ -80,20 +78,30 @@ export function Navigation() {
 
           <NavigationMenu className="hidden lg:block">
             <NavigationMenuList>
-              <DropdownMenu>
-                <DropdownMenuTrigger>Course Materials</DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {CourseSections.map((section, index) => (
-                    <Link
-                      key={index}
-                      href={`/course-materials/${section.slug}`}
-                      className="block w-full px-4 py-2 text-sm hover:bg-muted/70"
-                    >
-                      {section.title}
-                    </Link>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Course Materials Dropdown */}
+              <NavigationMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className={navigationMenuTriggerStyle()}>
+                    Course Materials
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Select Semester</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {semesters.map((semester) => (
+                      <DropdownMenuItem key={`${semester.number}-${semester.type}`} asChild>
+                        <Link 
+                          href={`/course-materials/semester-${semester.number}${semester.type !== 'regular' ? `-${semester.type}` : ''}`}
+                          className="w-full"
+                        >
+                          {semester.title}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </NavigationMenuItem>
+
+              {/* Academic Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Academic</NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -113,6 +121,7 @@ export function Navigation() {
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+
               <NavigationMenuItem>
                 <NavigationMenuLink href="/about" className={navigationMenuTriggerStyle()}>
                   About
@@ -127,6 +136,7 @@ export function Navigation() {
           </NavigationMenu>
 
           <div className="hidden items-center gap-4 lg:flex">
+            <ThemeToggle />
             <Link href="/auth/login">
               <Button variant="outline">Admin Login</Button>
             </Link>
@@ -152,6 +162,25 @@ export function Navigation() {
               </SheetHeader>
               <div className="flex flex-col p-4">
                 <Accordion type="single" collapsible className="mt-4 mb-2">
+                  {/* Course Materials Mobile */}
+                  <AccordionItem value="course-materials" className="border-none">
+                    <AccordionTrigger className="text-base hover:no-underline">Course Materials</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-2">
+                        {semesters.map((semester) => (
+                          <Link
+                            key={`${semester.number}-${semester.type}`}
+                            href={`/course-materials/semester-${semester.number}${semester.type !== 'regular' ? `-${semester.type}` : ''}`}
+                            className="block rounded-md p-2 transition-colors hover:bg-muted/70"
+                          >
+                            {semester.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  {/* Academic Mobile */}
                   <AccordionItem value="academic" className="border-none">
                     <AccordionTrigger className="text-base hover:no-underline">Academic</AccordionTrigger>
                     <AccordionContent>

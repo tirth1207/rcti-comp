@@ -3,6 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Users, FileText, BookOpen, Calendar, MessageSquare, Bell, Plus, TrendingUp } from "lucide-react"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 
 export default async function AdminDashboard() {
   const supabase = await createClient()
@@ -89,6 +91,7 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-8">
+      <SidebarTrigger className="-ml-1" />
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
