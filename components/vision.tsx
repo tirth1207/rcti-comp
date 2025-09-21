@@ -1,96 +1,78 @@
-import { ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Eye, Target, Lightbulb, ArrowRight } from "lucide-react"
 
-const Feature74 = () => {
+export function Feature74() {
   return (
-    <section className="py-20">
-      <div className="mx-auto flex flex-col gap-16 lg:px-16">
-        <div className="lg:max-w-3xl">
-          <h2 className="mb-3 text-xl font-semibold md:mb-4 md:text-4xl lg:mb-6">
-            About RCTI
-          </h2>
-          <p className="mb-8 text-muted-foreground lg:text-lg">
-            Welcome to R.C. Technical Institute, Ahmedabad.
-Founded in 1910 by Rao Bahadoor Ranchhodlal Chhotalal, the institute began with certificate courses in Mechanical, Electrical, and Textile fields. In 1947, these evolved into diploma programmes, and over time new courses like Printing, Mechanical, Electrical, Computer, IT, and Civil Engineering were introduced. To support this growth, the institute moved to its current eco-friendly Sola campus in 1997.
-          </p>
-          <a
-            href="#"
-            className="group flex items-center text-xs font-medium md:text-base lg:text-lg"
-          >
-            Read More{" "}
-            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-          <div className="flex flex-col overflow-clip rounded-xl border border-border md:col-span-2 md:grid md:grid-cols-2 md:gap-6 lg:gap-8">
-            <div className="md:min-h-[24rem] lg:min-h-[28rem] xl:min-h-[32rem]">
-              <img
-                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg"
-                alt="Feature 1"
-                className="aspect-16/9 h-full w-full object-cover object-center"
-              />
-            </div>
-            <div className="flex flex-col justify-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12">
-              <h3 className="mb-3 text-lg font-semibold md:mb-4 md:text-2xl lg:mb-6">
-                Vision Of The Institute
-              </h3>
-              <ul className="list-disc pl-5 text-muted-foreground lg:text-lg">
-                <li>
-                  To cater to the technological development of the nation through excellence in technical education by satisfying needs of the industries & society.
-                </li>
-              </ul>
-              <h3 className="mt-6 text-lg font-semibold md:mb-4 md:text-2xl lg:mb-6">
-                Vision Of The Department
-              </h3>
-              <ul className="list-disc pl-5 text-muted-foreground lg:text-lg">
-                <li>
-                 To mould young and fresh minds into challenging computer professionals with ethical values and shaping them with upcoming technologies and develop the ability to deal with real world situations with skills and innovative ideas
-                </li>
-              </ul>
-            </div>
+    <section className="py-16 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(120,119,198,0.05),transparent)]" />
+
+      <div className="container mx-auto px-4 relative">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">
+              Our Vision
+            </Badge>
+            <h2 className="text-3xl font-bold text-foreground mb-4 text-balance">
+              Leading Innovation in Computer Science Education
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
+              We envision a future where our graduates become technology leaders, driving innovation and solving complex
+              global challenges through computational thinking.
+            </p>
           </div>
-          <div className="flex flex-col-reverse overflow-clip rounded-xl border border-border md:col-span-2 md:grid md:grid-cols-2 md:gap-6 lg:gap-8">
-            <div className="flex flex-col justify-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12">
-              <h3 className="mb-3 text-lg font-semibold md:mb-4 md:text-2xl lg:mb-6">
-                Mission Of The Institute
-              </h3>
-              <ul className="list-disc pl-5 text-muted-foreground lg:text-lg">
-                <li>
-                  To impart qualitative technical education to the students and inculcating core values in them through optimum utilization and mobilization of institute’s resources to enhance their employability.
-                </li>
-                <li>
-                  To strengthen linkage with industry, networking with other institutions and organizations by providing various services and conducting demand driven continuing education and community programmes.
-                </li>
-                <li>
-                  To strive for becoming a centre of excellence enabling to face the ever changing and challenging technological environment.
-                </li>
-              </ul>
-              <h3 className="mt-6 text-lg font-semibold md:mb-4 md:text-2xl lg:mb-6">
-                Mission Of The Department
-              </h3>
-              <ul className="list-disc pl-5 text-muted-foreground lg:text-lg">
-                <li>
-                  To produce competent computer professionals by providing state-of-the-art training, hands-on experience and skill for practical environment.
-                </li>
-                <li>
-                  To impart moral, ethical values and interpersonal skills to the students.
-                </li>
-                <li>
-                  To impart necessary technical and professional skills among the students to make them employable and eligible for higher studies.
-                </li>
-              </ul>
-            </div>
-            <div className="md:min-h-[24rem] lg:min-h-[28rem] xl:min-h-[32rem]">
-              <img
-                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg"
-                alt="Feature 2"
-                className="aspect-16/9 h-full w-full object-cover object-center"
-              />
-            </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="text-center border-border/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group hover:-translate-y-1 bg-card/50 backdrop-blur">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-950/20 dark:to-blue-900/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Eye className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-3 text-lg">Excellence</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Striving for academic excellence and maintaining the highest standards in computer science education.
+                </p>
+                <div className="flex items-center justify-center text-blue-600 dark:text-blue-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Learn More
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-border/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group hover:-translate-y-1 bg-card/50 backdrop-blur">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-50 dark:from-green-950/20 dark:to-green-900/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-3 text-lg">Innovation</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Fostering creativity and innovation through cutting-edge research and modern teaching methodologies.
+                </p>
+                <div className="flex items-center justify-center text-green-600 dark:text-green-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Learn More
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-border/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group hover:-translate-y-1 bg-card/50 backdrop-blur">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-950/20 dark:to-purple-900/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Lightbulb className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-3 text-lg">Impact</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Creating positive impact in society through technology solutions and ethical computing practices.
+                </p>
+                <div className="flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Learn More
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
     </section>
-  );
-};
-
-export { Feature74 };
+  )
+}
