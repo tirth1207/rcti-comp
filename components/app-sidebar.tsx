@@ -9,6 +9,7 @@ import {
   Command,
   FileText,
   Frame,
+  GraduationCap,
   LayoutDashboard,
   LifeBuoy,
   Map,
@@ -37,7 +38,7 @@ import {
 const data = {
   user: {
     name: "admin",
-    email: "m@example.com",
+    email: "",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -51,20 +52,30 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  name,
+  email,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { name: string; email: string }) {
+  const user = {
+    ...data.user,
+    name,
+    email,
+  }
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <a href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                  <GraduationCap className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">RCTI</span>
+                  <span className="truncate text-xs">Computer Department</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -75,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   )

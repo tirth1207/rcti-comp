@@ -22,6 +22,7 @@ export default function EditNewsletterPage({ params }: EditNewsletterPageProps) 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [file, setFile] = useState<File | null>(null)
+  const [fileUrl, setFileUrl] = useState("")
   const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -55,9 +56,9 @@ export default function EditNewsletterPage({ params }: EditNewsletterPageProps) 
     const supabase = createClient()
 
     try {
-      let fileUrl = currentFileUrl
+      let updatedFileUrl = currentFileUrl
 
-      // Upload new file if provided
+      // If a file is selected, upload it
       if (file) {
         const fileExt = file.name.split(".").pop()
         const fileName = `${Date.now()}.${fileExt}`
@@ -70,7 +71,11 @@ export default function EditNewsletterPage({ params }: EditNewsletterPageProps) 
           data: { publicUrl },
         } = supabase.storage.from("newsletters").getPublicUrl(fileName)
 
-        fileUrl = publicUrl
+        updatedFileUrl = publicUrl
+        console.log("Uploaded file URL:", updatedFileUrl)
+      } else if (fileUrl) {
+        // If a Google Drive link is provided, use it
+        updatedFileUrl = fileUrl
       }
 
       // Update newsletter
@@ -79,7 +84,7 @@ export default function EditNewsletterPage({ params }: EditNewsletterPageProps) 
         .update({
           title,
           description,
-          file_url: fileUrl,
+          file_url: updatedFileUrl,
         })
         .eq("id", params.id)
 
@@ -147,37 +152,36 @@ export default function EditNewsletterPage({ params }: EditNewsletterPageProps) 
               />
             </div>
 
+            
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter newsletter description"
-                rows={4}
+              <Label htmlFor="file">Upload PDF (Optional)</Label>
+              <Input
+                id="file"
+                type="file"
+                accept="application/pdf"
+                onChange={(e) => setFile(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="file">PDF File</Label>
-              <Input id="file" type="file" accept=".pdf" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-              {currentFileUrl && (
+              {currentFileUrl && !fileUrl && (
                 <p className="text-sm text-muted-foreground">
-                  Current file:{" "}
-                  <a
-                    href={currentFileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    View current PDF
+                  <a href={currentFileUrl} target="_blank" rel="noopener noreferrer" className="underline">
+                    View current file
                   </a>
                 </p>
               )}
-              <p className="text-sm text-muted-foreground">
-                Upload a new PDF file to replace the current one (optional)
-              </p>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
+              <Input
+                id="fileUrl"
+                type="url"
+                value={fileUrl}
+                onChange={(e) => setFileUrl(e.target.value)}
+                placeholder="https://drive.google.com/file/d/.../view"
+              />
+              <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
+            </div>
+                          
 
             <div className="flex space-x-4">
               <Button type="submit" disabled={isSubmitting}>

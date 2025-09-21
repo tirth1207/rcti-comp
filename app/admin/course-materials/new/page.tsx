@@ -17,7 +17,7 @@ export default function NewCourseMaterialPage() {
   const [subject, setSubject] = useState("")
   const [semester, setSemester] = useState("")
   const [title, setTitle] = useState("")
-  const [file, setFile] = useState<File | null>(null)
+  const [fileUrl, setFileUrl] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
 
@@ -28,30 +28,12 @@ export default function NewCourseMaterialPage() {
     const supabase = createClient()
 
     try {
-      let fileUrl = null
-
-      // Upload file if provided
-      if (file) {
-        const fileExt = file.name.split(".").pop()
-        const fileName = `${Date.now()}.${fileExt}`
-
-        const { error: uploadError } = await supabase.storage.from("materials").upload(fileName, file)
-
-        if (uploadError) throw uploadError
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("materials").getPublicUrl(fileName)
-
-        fileUrl = publicUrl
-      }
-
       // Get current user
       const {
         data: { user },
       } = await supabase.auth.getUser()
 
-      // Insert course material
+      // Insert course material with Google Drive URL
       const { error } = await supabase.from("course_materials").insert([
         {
           subject,
@@ -67,7 +49,7 @@ export default function NewCourseMaterialPage() {
       router.push("/admin/course-materials")
     } catch (error) {
       console.error("Error creating course material:", error)
-      alert("There was an error uploading the course material. Please try again.")
+      alert("There was an error saving the course material. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
@@ -138,24 +120,25 @@ export default function NewCourseMaterialPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="file">File (Optional)</Label>
+              <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
               <Input
-                id="file"
-                type="file"
-                accept=".pdf,.ppt,.pptx,.doc,.docx"
-                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                id="fileUrl"
+                type="url"
+                value={fileUrl}
+                onChange={(e) => setFileUrl(e.target.value)}
+                placeholder="https://drive.google.com/file/d/.../view"
               />
-              <p className="text-sm text-muted-foreground">Upload a PDF, PowerPoint, or Word document (optional)</p>
+              <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
             </div>
 
             <div className="flex space-x-4">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
-                  "Uploading..."
+                  "Saving..."
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Upload Material
+                    Save Material
                   </>
                 )}
               </Button>

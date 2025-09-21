@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FileText, Download } from "lucide-react"
+import { FileText, Download, SquareArrowOutUpRight } from "lucide-react"
 
 export default async function NewsletterPage() {
   const supabase = await createClient()
@@ -47,10 +47,23 @@ export default async function NewsletterPage() {
                 <CardContent>
                   <CardDescription className="mb-4">{newsletter.description}</CardDescription>
                   {newsletter.file_url && (
-                    <Button variant="outline" size="sm" className="w-full bg-transparent">
-                      <Download className="h-4 w-4 mr-2" />
-                      Download PDF
-                    </Button>
+                    <a
+                      href={newsletter.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2"
+                    >
+                      <Button
+                      variant="secondary"
+                      className="w-full bg-transparent flex items-center justify-center gap-2"
+                      asChild
+                      >
+                      <>
+                        <SquareArrowOutUpRight className="h-4 w-4" />
+                        <span className="font-medium">Redirect</span>
+                      </>
+                      </Button>
+                    </a>
                   )}
                 </CardContent>
               </Card>

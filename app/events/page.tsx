@@ -47,7 +47,7 @@ export default async function EventsPage() {
                     <div className="flex-1">
                       <CardTitle className="text-lg mb-1">{event.title}</CardTitle>
                       <p className="text-sm text-muted-foreground">
-                        {new Date(event.created_at).toLocaleDateString("en-US", {
+                        {new Date(event.date).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "long",
                           day: "numeric",

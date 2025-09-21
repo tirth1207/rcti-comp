@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import { GraduationCap, Mail, Phone, MapPin, ExternalLink, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -153,4 +154,19 @@ export function Footer() {
       </div>
     </footer>
   )
+}
+
+import { usePathname } from "next/navigation";
+// import { Footer } from "@/components/footer";
+
+
+export function FooterConditional() {
+  const pathname = usePathname();
+
+  // Hide footer for all /admin/... routes
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
+  return <Footer />;
 }

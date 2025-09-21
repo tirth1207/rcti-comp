@@ -23,7 +23,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-background">
       <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar email={profile?.email} name={profile?.name} />
       <SidebarInset>
 
       {/* Main content */}

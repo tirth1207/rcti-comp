@@ -2,7 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+// import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
+// import { Footer } from "@/components/footer";
 import { GraduationCap, Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -271,4 +273,19 @@ export function Navigation() {
       </div>
     </header>
   )
+}
+
+
+
+
+
+export function NavConditional() {
+  const pathname = usePathname();
+
+  // Hide footer for all /admin/... routes
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
+  return <Navigation />;
 }

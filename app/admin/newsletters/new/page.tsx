@@ -16,6 +16,7 @@ import Link from "next/link"
 export default function NewNewsletterPage() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [fileUrl, setFileUrl] = useState("")
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
@@ -118,9 +119,15 @@ export default function NewNewsletterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="file">PDF File (Optional)</Label>
-              <Input id="file" type="file" accept=".pdf" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-              <p className="text-sm text-muted-foreground">Upload a PDF file for the newsletter (optional)</p>
+              <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
+              <Input
+                id="fileUrl"
+                type="url"
+                value={fileUrl}
+                onChange={(e) => setFileUrl(e.target.value)}
+                placeholder="https://drive.google.com/file/d/.../view"
+              />
+              <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
             </div>
 
             <div className="flex space-x-4">
