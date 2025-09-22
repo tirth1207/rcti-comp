@@ -2,7 +2,8 @@ import type React from "react"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { AdminNavigation } from "@/components/admin-navigation"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from
+ "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
 export default async function AdminLayout({
