@@ -114,7 +114,7 @@ export default async function AdminSubjectResourcesPage({ params }: Props) {
         </Link>
         <div className="flex-1 flex-col">
           <div className="flex items-center space-x-3">
-<div className="flex-1">
+<div className="flex-1 mt-2">
             <h1 className="text-3xl font-bold text-foreground">{subject.name}</h1>
             {subject.code && (
               <Badge variant="outline">{subject.code}</Badge>
