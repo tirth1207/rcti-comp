@@ -112,7 +112,7 @@ export default async function AdminSubjectResourcesPage({ params }: Props) {
             Back to Subjects
           </Button>
         </Link>
-        <div className="flex-1">
+        <div className="flex-1 flex-col">
           <div className="flex items-center space-x-3">
             <h1 className="text-3xl font-bold text-foreground">{subject.name}</h1>
             {subject.code && (
