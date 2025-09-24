@@ -222,7 +222,7 @@ export default function NewResourcePage({ params }: Props) {
                   id="file"
                   type="file"
                   accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  onChange={(e) => setFile(e.target.value || null)}
                 />
                 <p className="text-xs text-muted-foreground">
                   Supported formats: PDF, DOC, PPT, TXT, Images (Max 10MB)
