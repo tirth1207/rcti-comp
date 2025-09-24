@@ -2,7 +2,8 @@ import type React from "react"
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { AdminNavigation } from "@/components/admin-navigation"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from
+ "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
 export default async function AdminLayout({
@@ -29,7 +30,9 @@ export default async function AdminLayout({
       {/* Main content */}
       <div className="">
         <main className="py-6">
-          <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+          <div className="px-4 sm:px-6 lg:px-8">
+      <SidebarTrigger className="-ml-1" />
+{children}</div>
         </main>
       </div>
       </SidebarInset>
