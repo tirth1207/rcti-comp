@@ -91,7 +91,7 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <SidebarTrigger className="-ml-1" />
+      {/* <SidebarTrigger className="-ml-1" /> */}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

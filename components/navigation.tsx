@@ -164,7 +164,7 @@ export function Navigation() {
                   </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                {/* <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
+                 <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
                   Academic
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -188,7 +188,7 @@ export function Navigation() {
                       </NavigationMenuLink>
                     ))}
                   </div>
-                </NavigationMenuContent> */}
+                </NavigationMenuContent> 
               </NavigationMenuItem>
 
               {/* Contact Link */}
