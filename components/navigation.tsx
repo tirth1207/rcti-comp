@@ -28,6 +28,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
+import { title } from "process";
 
 export function Navigation() {
   const pathname = usePathname()
@@ -59,6 +60,11 @@ export function Navigation() {
       description: "Share your thoughts and suggestions",
       href: "/feedback",
     },
+    {
+      title: "About",
+      description: "Learn more about our department",
+      href: "/about",
+    }
   ]
 
   const semesters = [
