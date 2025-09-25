@@ -1,19 +1,17 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, Save } from "lucide-react";
+import Link from "next/link";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { ArrowLeft, Save } from "lucide-react"
-import Link from "next/link"
-
-export default function NewNewsletterPage() {
+export default function NewStudentCornerPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [fileUrl, setFileUrl] = useState("");
@@ -23,9 +21,7 @@ export default function NewNewsletterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const supabase = createClient();
-
     try {
       // Get current user
       const {
@@ -35,22 +31,20 @@ export default function NewNewsletterPage() {
       if (userError) throw userError;
       if (!user) throw new Error("User not authenticated");
 
-      // Insert newsletter with Google Drive URL only
-      const { error } = await supabase.from("newsletters").insert([
+      // Insert student-corner item
+      const { error } = await supabase.from("student_corner").insert([
         {
           title: title.trim(),
-          description: description.trim(),
-          file_url: fileUrl || null,
+          description: description.trim() || null,
+          file_url: fileUrl.trim() || null,
           created_by: user.id,
         },
       ]);
-
       if (error) throw error;
-
-      router.push("/admin/newsletters");
+      router.push("/admin/student-corner");
     } catch (error) {
-      console.error("Error creating newsletter:", error);
-      alert("There was an error creating the newsletter. Please try again.");
+      console.error("Error creating student-corner item:", error);
+      alert("There was an error creating the item. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -60,33 +54,33 @@ export default function NewNewsletterPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center space-x-4">
-        <Link href="/admin/newsletters">
+        <Link href="/admin/student-corner">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Add Newsletter</h1>
-          <p className="text-muted-foreground">Create a new newsletter or announcement</p>
+          <h1 className="text-3xl font-bold text-foreground">Add Student Corner Item</h1>
+          <p className="text-muted-foreground">Create a new resource for the student corner</p>
         </div>
       </div>
 
       {/* Form */}
       <Card>
         <CardHeader>
-          <CardTitle>Newsletter Details</CardTitle>
-          <CardDescription>Fill in the information for the new newsletter</CardDescription>
+          <CardTitle>Student Corner Details</CardTitle>
+          <CardDescription>Fill in the information for the new item</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter newsletter title"
+                placeholder="Enter title"
                 required
               />
             </div>
@@ -97,13 +91,13 @@ export default function NewNewsletterPage() {
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter newsletter description"
-                rows={4}
+                placeholder="Enter description"
+                rows={3}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
+              <Label htmlFor="fileUrl">File URL (Google Drive or direct link)</Label>
               <Input
                 id="fileUrl"
                 type="url"
@@ -111,7 +105,7 @@ export default function NewNewsletterPage() {
                 onChange={(e) => setFileUrl(e.target.value)}
                 placeholder="https://drive.google.com/file/d/.../view"
               />
-              <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
+              <p className="text-sm text-muted-foreground">Paste a Google Drive or direct file link (optional)</p>
             </div>
 
             <div className="flex space-x-4">
@@ -121,17 +115,19 @@ export default function NewNewsletterPage() {
                 ) : (
                   <>
                     <Save className="h-4 w-4 mr-2" />
-                    Create Newsletter
+                    Create Item
                   </>
                 )}
               </Button>
-              <Link href="/admin/newsletters">
-                <Button variant="outline">Cancel</Button>
+              <Link href="/admin/student-corner">
+                <Button variant="outline" type="button">
+                  Cancel
+                </Button>
               </Link>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Plus, Users } from "lucide-react"
-import { AdminFacultyList } from "@/components/admin-faculty-list"
+import { Plus } from "lucide-react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export default async function FacultyPage() {
   const supabase = await createClient()
@@ -28,7 +28,43 @@ export default async function FacultyPage() {
           </Button>
         </Link>
       </div>
-      <AdminFacultyList items={faculty || []} />
+      {/* Faculty Table */}
+      {faculty && faculty.length > 0 ? (
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Designation</TableHead>
+                <TableHead>Qualification</TableHead>
+                <TableHead>Contact</TableHead>
+                <TableHead>Photo</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {faculty.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.designation}</TableCell>
+                  <TableCell>{item.qualification}</TableCell>
+                  <TableCell>{item.contact}</TableCell>
+                  <TableCell>
+                    {item.photo_url ? (
+                      <a href={item.photo_url} target="_blank" rel="noopener noreferrer">
+                        <img src={item.photo_url} alt={item.name} className="h-10 w-10 rounded-full object-cover" />
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <div className="text-center text-muted-foreground py-12">No faculty found.</div>
+      )}
     </div>
   )
 }

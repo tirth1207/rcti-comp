@@ -23,8 +23,8 @@ export default function EditEventPage({ params }: EditEventPageProps) {
   const [description, setDescription] = useState("")
   const [date, setDate] = useState("")
   const [location, setLocation] = useState("")
-  const [image, setImage] = useState<File | null>(null)
-  const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null)
+  const [imageUrl, setImageUrl] = useState("");
+  const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
@@ -45,7 +45,8 @@ export default function EditEventPage({ params }: EditEventPageProps) {
       setDescription(data.description || "")
       setDate(data.date ? new Date(data.date).toISOString().split("T")[0] : "")
       setLocation(data.location || "")
-      setCurrentImageUrl(data.image_url)
+  setCurrentImageUrl(data.image_url)
+  setImageUrl(data.image_url || "")
       setIsLoading(false)
     }
 
@@ -53,31 +54,13 @@ export default function EditEventPage({ params }: EditEventPageProps) {
   }, [params.id, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    const supabase = createClient()
+    const supabase = createClient();
 
     try {
-      let imageUrl = currentImageUrl
-
-      // Upload new image if provided
-      if (image) {
-        const fileExt = image.name.split(".").pop()
-        const fileName = `${Date.now()}.${fileExt}`
-
-        const { error: uploadError } = await supabase.storage.from("events").upload(fileName, image)
-
-        if (uploadError) throw uploadError
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("events").getPublicUrl(fileName)
-
-        imageUrl = publicUrl
-      }
-
-      // Update event
+      // Update event with image URL only
       const { error } = await supabase
         .from("events")
         .update({
@@ -85,20 +68,20 @@ export default function EditEventPage({ params }: EditEventPageProps) {
           description,
           date: date ? new Date(date).toISOString() : null,
           location,
-          image_url: imageUrl,
+          image_url: imageUrl || null,
         })
-        .eq("id", params.id)
+        .eq("id", params.id);
 
-      if (error) throw error
+      if (error) throw error;
 
-      router.push("/admin/events")
+      router.push("/admin/events");
     } catch (error) {
-      console.error("Error updating event:", error)
-      alert("There was an error updating the event. Please try again.")
+      console.error("Error updating event:", error);
+      alert("There was an error updating the event. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -165,26 +148,17 @@ export default function EditEventPage({ params }: EditEventPageProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="date">Event Date</Label>
-              <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+              <Label htmlFor="imageUrl">Event Image URL (Google Drive or direct link)</Label>
               <Input
-                id="location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Enter event location"
+                id="imageUrl"
+                type="url"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://drive.google.com/file/d/.../view"
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="image">Event Image</Label>
-              <Input id="image" type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} />
               {currentImageUrl && (
                 <p className="text-sm text-muted-foreground">
-                  Current image:{" "}
+                  Current image: {" "}
                   <a
                     href={currentImageUrl}
                     target="_blank"
@@ -195,7 +169,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
                   </a>
                 </p>
               )}
-              <p className="text-sm text-muted-foreground">Upload a new image to replace the current one (optional)</p>
+              <p className="text-sm text-muted-foreground">Paste a Google Drive or direct image link to replace the current one (optional)</p>
             </div>
 
             <div className="flex space-x-4">

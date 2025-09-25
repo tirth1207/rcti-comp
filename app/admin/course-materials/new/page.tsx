@@ -14,46 +14,49 @@ import { ArrowLeft, Save } from "lucide-react"
 import Link from "next/link"
 
 export default function NewCourseMaterialPage() {
-  const [subject, setSubject] = useState("")
-  const [semester, setSemester] = useState("")
-  const [title, setTitle] = useState("")
-  const [fileUrl, setFileUrl] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useRouter()
+  const [subject, setSubject] = useState("");
+  const [semester, setSemester] = useState("");
+  const [title, setTitle] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    const supabase = createClient()
+    const supabase = createClient();
 
     try {
       // Get current user
       const {
         data: { user },
-      } = await supabase.auth.getUser()
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error("User not authenticated");
 
-      // Insert course material with Google Drive URL
+      // Insert course material with Google Drive URL only
       const { error } = await supabase.from("course_materials").insert([
         {
-          subject,
+          subject: subject.trim(),
           semester: Number.parseInt(semester),
-          title,
-          file_url: fileUrl,
-          uploaded_by: user?.id,
+          title: title.trim(),
+          file_url: fileUrl || null,
+          uploaded_by: user.id,
         },
-      ])
+      ]);
 
-      if (error) throw error
+      if (error) throw error;
 
-      router.push("/admin/course-materials")
+      router.push("/admin/course-materials");
     } catch (error) {
-      console.error("Error creating course material:", error)
-      alert("There was an error saving the course material. Please try again.")
+      console.error("Error creating course material:", error);
+      alert("There was an error saving the course material. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-6">

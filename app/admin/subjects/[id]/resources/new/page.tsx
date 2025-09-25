@@ -32,6 +32,7 @@ const RESOURCE_CATEGORIES = [
 export default function NewResourcePage({ params }: Props) {
   const [subject, setSubject] = useState<any>(null)
   const [title, setTitle] = useState("")
+  const [fileUrl, setFileUrl] = useState("")
   const [category, setCategory] = useState("")
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,8 +63,20 @@ export default function NewResourcePage({ params }: Props) {
   }, [params.id, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  e.preventDefault()
+  setIsSubmitting(true)
+
+  const supabase = createClient()
+
+  try {
+    // Get current user
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError) throw userError
+    if (!user) throw new Error("User not authenticated")
 
     if (!title.trim() || !category) {
       alert("Please fill in all required fields")
@@ -71,54 +84,29 @@ export default function NewResourcePage({ params }: Props) {
       return
     }
 
-    const supabase = createClient()
+    // Insert new row with Google Drive URL
+    const { error } = await supabase.from("resources").insert([
+      {
+        title: title.trim(),
+        category,
+        file_url: fileUrl || null, // ✅ URL instead of raw upload
+        uploaded_at: new Date().toISOString(),
+        uploaded_by: user.id,
+      },
+    ])
 
-    try {
-      let fileUrl = null
+    if (error) throw error
 
-      // Upload file if provided
-      if (file) {
-        const fileExt = file.name.split(".").pop()
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
-
-        const { error: uploadError } = await supabase.storage
-          .from("resources")
-          .upload(fileName, file)
-
-        if (uploadError) throw uploadError
-
-        const { data: { publicUrl } } = supabase.storage
-          .from("resources")
-          .getPublicUrl(fileName)
-
-        fileUrl = publicUrl
-      }
-
-      // Get current user
-      const { data: { user } } = await supabase.auth.getUser()
-
-      // Insert resource
-      const { error } = await supabase.from("resources").insert([
-        {
-          subject_id: params.id,
-          category: category,
-          title: title.trim(),
-          file_url: fileUrl,
-          uploaded_by: user?.id,
-        },
-      ])
-
-      if (error) throw error
-
-      router.push(`/admin/subjects/${params.id}/resources`)
-      router.refresh()
-    } catch (error) {
-      console.error("Error creating resource:", error)
-      alert("There was an error creating the resource. Please try again.")
-    } finally {
-      setIsSubmitting(false)
-    }
+    router.push(`/admin/subjects/${params.id}/resources`)
+    router.refresh()
+  } catch (error) {
+    console.error("Error creating resource:", error)
+    alert("There was an error creating the resource. Please try again.")
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
 
   if (isLoading) {
     return (
@@ -217,22 +205,15 @@ export default function NewResourcePage({ params }: Props) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="file">Upload File</Label>
+                <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
                 <Input
-                  id="file"
-                  type="file"
-                  accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  id="fileUrl"
+                  type="url"
+                  value={fileUrl}
+                  onChange={(e) => setFileUrl(e.target.value)}
+                  placeholder="https://drive.google.com/file/d/.../view"
                 />
-                <p className="text-xs text-muted-foreground">
-                  Supported formats: PDF, DOC, PPT, TXT, Images (Max 10MB)
-                </p>
-                {file && (
-                  <div className="flex items-center space-x-2 text-sm text-green-600">
-                    <Upload className="h-4 w-4" />
-                    <span>File selected: {file.name}</span>
-                  </div>
-                )}
+                <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
               </div>
 
               <div className="flex space-x-4">

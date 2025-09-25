@@ -33,6 +33,7 @@ const RESOURCE_CATEGORIES = [
 export default function EditResourcePage({ params }: Props) {
   const [subject, setSubject] = useState<any>(null)
   const [title, setTitle] = useState("")
+  const [fileUrl, setFileUrl] = useState("")
   const [category, setCategory] = useState("")
   const [currentFileUrl, setCurrentFileUrl] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
@@ -82,8 +83,20 @@ export default function EditResourcePage({ params }: Props) {
   }, [params.id, params.rid, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  e.preventDefault()
+  setIsSubmitting(true)
+
+  const supabase = createClient()
+
+  try {
+    // Get current user
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError) throw userError
+    if (!user) throw new Error("User not authenticated")
 
     if (!title.trim() || !category) {
       alert("Please fill in all required fields")
@@ -91,50 +104,30 @@ export default function EditResourcePage({ params }: Props) {
       return
     }
 
-    const supabase = createClient()
+    // Update resource with Google Drive URL (no file upload)
+    const { error } = await supabase
+      .from("resources")
+      .update({
+        title: title.trim(),
+        category,
+        file_url: fileUrl || null,
+        updated_at: new Date().toISOString(),
+        updated_by: user.id,
+      })
+      .eq("id", params.rid)
 
-    try {
-      let fileUrl = currentFileUrl
+    if (error) throw error
 
-      // Upload new file if provided
-      if (file) {
-        const fileExt = file.name.split(".").pop()
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
-
-        const { error: uploadError } = await supabase.storage
-          .from("resources")
-          .upload(fileName, file)
-
-        if (uploadError) throw uploadError
-
-        const { data: { publicUrl } } = supabase.storage
-          .from("resources")
-          .getPublicUrl(fileName)
-
-        fileUrl = publicUrl
-      }
-
-      // Update resource
-      const { error } = await supabase
-        .from("resources")
-        .update({
-          category: category,
-          title: title.trim(),
-          file_url: fileUrl,
-        })
-        .eq("id", params.rid)
-
-      if (error) throw error
-
-      router.push(`/admin/subjects/${params.id}/resources`)
-      router.refresh()
-    } catch (error) {
-      console.error("Error updating resource:", error)
-      alert("There was an error updating the resource. Please try again.")
-    } finally {
-      setIsSubmitting(false)
-    }
+    router.push(`/admin/subjects/${params.id}/resources`)
+    router.refresh()
+  } catch (error) {
+    console.error("Error updating resource:", error)
+    alert("There was an error saving the resource. Please try again.")
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this resource? This action cannot be undone.")) {
@@ -254,36 +247,15 @@ export default function EditResourcePage({ params }: Props) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="file">Replace File</Label>
+                  <Label htmlFor="fileUrl">Google Drive Link (Optional)</Label>
                   <Input
-                    id="file"
-                    type="file"
-                    accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif"
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    id="fileUrl"
+                    type="url"
+                    value={fileUrl}
+                    onChange={(e) => setFileUrl(e.target.value)}
+                    placeholder="https://drive.google.com/file/d/.../view"
                   />
-                  {currentFileUrl && (
-                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                      <span>Current file:</span>
-                      <a
-                        href={currentFileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline flex items-center"
-                      >
-                        View current file
-                        <ExternalLink className="h-3 w-3 ml-1" />
-                      </a>
-                    </div>
-                  )}
-                  {file && (
-                    <div className="flex items-center space-x-2 text-sm text-green-600">
-                      <Upload className="h-4 w-4" />
-                      <span>New file selected: {file.name}</span>
-                    </div>
-                  )}
-                  <p className="text-xs text-muted-foreground">
-                    Upload a new file to replace the current one (optional)
-                  </p>
+                  <p className="text-sm text-muted-foreground">Paste a Google Drive link to the material (optional)</p>
                 </div>
 
                 <div className="flex space-x-4">
