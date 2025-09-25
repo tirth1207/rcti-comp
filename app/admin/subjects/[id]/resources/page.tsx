@@ -112,14 +112,16 @@ export default async function AdminSubjectResourcesPage({ params }: Props) {
             Back to Subjects
           </Button>
         </Link>
-        <div className="flex-1">
+        <div className="flex-1 flex-col">
           <div className="flex items-center space-x-3">
+<div className="flex-1 mt-2">
             <h1 className="text-3xl font-bold text-foreground">{subject.name}</h1>
             {subject.code && (
               <Badge variant="outline">{subject.code}</Badge>
             )}
             <Badge variant="secondary">Semester {subject.semester}</Badge>
           </div>
+</div>
           <p className="text-muted-foreground">Manage resources and study materials</p>
         </div>
         <Link href={`/admin/subjects/${params.id}/resources/new`}>
