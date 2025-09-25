@@ -4,6 +4,7 @@ import { FooterConditional } from "@/components/footer"; // import here
 import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,7 +39,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavConditional />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            <Analytics/>
+            {children}</main>
           <FooterConditional />
         </ThemeProvider>
       </body>
