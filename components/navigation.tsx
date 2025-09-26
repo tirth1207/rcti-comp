@@ -139,10 +139,10 @@ export function Navigation() {
                     Academic
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 shadow-lg border-border/50">
+                  <DropdownMenuContent className="w-[600px] shadow-lg border-border/50">
                     {/* <DropdownMenuLabel className="text-primary font-medium">Select Semester</DropdownMenuLabel> */}
                     {/* <DropdownMenuSeparator /> */}
-                    <div className="grid w-56 grid-cols-1 p-4 gap-3">
+                    <div className="grid w-[600px] grid-cols-2 p-4 gap-3">
                     {academicSections.map((section) => (
                       <NavigationMenuLink key={section.href} asChild>
                         <Link
@@ -164,7 +164,7 @@ export function Navigation() {
                   </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                 <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
+                {/* <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200">
                   Academic
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -188,7 +188,7 @@ export function Navigation() {
                       </NavigationMenuLink>
                     ))}
                   </div>
-                </NavigationMenuContent> 
+                </NavigationMenuContent> */}
               </NavigationMenuItem>
 
               {/* Contact Link */}
