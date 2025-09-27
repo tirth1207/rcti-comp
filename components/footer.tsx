@@ -11,7 +11,8 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative">
-                <GraduationCap className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+                {/* <GraduationCap className="h-8 w-8 text-primary transition-transform group-hover:scale-110" /> */}
+                <img src="/RCTI_Logo.png" alt="Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
                 <div className="absolute inset-0 bg-primary/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 opacity-0 group-hover:opacity-100" />
               </div>
               <span className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
@@ -118,22 +119,22 @@ export function Footer() {
                 <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <div className="font-medium text-foreground">Computer Science Department</div>
-                  <div>R.C. Technical Institute</div>
-                  <div>Ahmedabad, Gujarat</div>
+                  <div>Opp Sola Civil Hospital, Near Gujarat High Court</div>
+                  <div>S.G.Highway, Sola, Ahmedabad - 380060</div>
                 </div>
               </li>
               <li className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <a href="mailto:info@computerdept.edu" className="hover:underline">
-                  info@computerdept.edu
+                <a href="mailto:computer.rcti640@gmail.com" className="hover:underline">
+                  computer.rcti640@gmail.com
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+              {/* <li className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
                 <a href="tel:+15551234567" className="hover:underline">
                   +1 (555) 123-4567
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -141,7 +142,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border/40">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Computer Science Department. All rights reserved.
+              © {new Date().getFullYear()} Computer Engineering Department. All rights reserved.
             </p>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>Built with</span>

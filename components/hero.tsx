@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import { ArrowRight, BookOpen, Users, Calendar, Sparkles } from "lucide-react"
+import { AnimatedStudents } from "./ui/animatednumber"
 
 export function Hero() {
   return (
@@ -17,7 +18,7 @@ export function Hero() {
             className="mb-6 text-sm font-medium animate-in fade-in-0 slide-in-from-bottom-4 duration-1000 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
           >
             <Sparkles className="w-3 h-3 mr-1" />
-            Welcome to Computer Science Department
+            Welcome to Computer Engineering Department
           </Badge>
 
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 text-balance animate-in fade-in-0 slide-in-from-bottom-6 duration-1000 delay-200">

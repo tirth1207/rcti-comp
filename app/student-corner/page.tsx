@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Bell, Download, FileText } from "lucide-react"
+import { Bell, Download, FileText, SquareArrowOutUpRightIcon } from "lucide-react"
+import Link from "next/link"
 
 export default async function StudentCornerPage() {
   const supabase = await createClient()
@@ -47,13 +48,16 @@ export default async function StudentCornerPage() {
                 <CardContent>
                   <CardDescription className="mb-4 whitespace-pre-wrap">{notice.description}</CardDescription>
                   {notice.file_url && (
-                    <Button variant="outline" size="sm" className="w-full bg-transparent">
-                      <Download className="h-4 w-4 mr-2" />
-                      Download Attachment
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
+                    <Link href={notice.file_url} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm" className="w-full bg-transparent" >
+                      
+                      <SquareArrowOutUpRightIcon className="h-4 w-4 mr-2" />
+                      View Attachment
+                      </Button>
+                  </Link>
+                )}
+              </CardContent>
+            </Card>
             ))}
           </div>
         ) : (

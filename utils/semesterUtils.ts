@@ -59,6 +59,6 @@ export const AVAILABLE_SEMESTERS: SemesterInfo[] = [
   { number: 4, type: 'regular', displayName: 'Semester 4', slug: 'semester-4' },
   { number: 5, type: 'regular', displayName: 'Semester 5', slug: 'semester-5' },
   { number: 6, type: 'regular', displayName: 'Semester 6', slug: 'semester-6' },
-  { number: 7, type: 'regular', displayName: 'Semester 7', slug: 'semester-7' },
-  { number: 8, type: 'regular', displayName: 'Semester 8', slug: 'semester-8' },
+  // { number: 7, type: 'regular', displayName: 'Semester 7', slug: 'semester-7' },
+  // { number: 8, type: 'regular', displayName: 'Semester 8', slug: 'semester-8' },
 ]

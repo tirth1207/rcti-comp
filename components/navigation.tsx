@@ -77,8 +77,8 @@ export function Navigation() {
     { title: "Semester 4", number: 4, type: "regular" },
     { title: "Semester 5", number: 5, type: "regular" },
     { title: "Semester 6", number: 6, type: "regular" },
-    { title: "Semester 7", number: 7, type: "regular" },
-    { title: "Semester 8", number: 8, type: "regular" },
+    // { title: "Semester 7", number: 7, type: "regular" },
+    // { title: "Semester 8", number: 8, type: "regular" },
   ]
 
   return (
@@ -87,7 +87,8 @@ export function Navigation() {
         <nav className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-all duration-200 group">
             <div className="relative">
-              <GraduationCap className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+              {/* <GraduationCap className="h-8 w-8 text-primary transition-transform group-hover:scale-110" /> */}
+              <img src="/RCTI_Logo.png" alt="Logo" className="h-10 w-10 object-contain transition-transform group-hover:scale-110" />
               <div className="absolute inset-0 bg-primary/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 opacity-0 group-hover:opacity-100" />
             </div>
             <span className="text-lg font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
@@ -104,7 +105,7 @@ export function Navigation() {
                   <DropdownMenuTrigger
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50 transition-all duration-200",
+                      "hover:bg-transparent hover:text-accent-foreground data-[state=open]:bg-transparent transition-all duration-200",
                     )}
                   >
                     Course Materials

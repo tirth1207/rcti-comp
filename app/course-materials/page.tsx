@@ -42,7 +42,7 @@ export default function CourseMaterialsPage() {
         </div>
 
         {/* Additional Information Section */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-xl">How to Use</CardTitle>
@@ -92,10 +92,10 @@ export default function CourseMaterialsPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         {/* Help Section */}
-        <div className="mt-12 text-center">
+        {/* <div className="mt-12 text-center">
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle>Need Assistance?</CardTitle>
@@ -124,7 +124,7 @@ export default function CourseMaterialsPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </div>
   )

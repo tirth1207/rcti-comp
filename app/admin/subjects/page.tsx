@@ -1,36 +1,69 @@
-import { createClient } from "@/lib/supabase/server"
+"use client"
+
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Plus, BookOpen, Edit, Trash2, Users } from "lucide-react"
 
-export default async function AdminSubjectsPage() {
-  const supabase = await createClient()
+interface Subject {
+  id: string
+  name: string
+  code?: string
+  semester: number
+  created_at: string
+}
 
-  const { data: subjects, error } = await supabase
-    .from("subjects")
-    .select("*")
-    .order("semester", { ascending: true })
-    .order("name", { ascending: true })
+export default function AdminSubjectsPage() {
+  const [subjects, setSubjects] = useState<Subject[]>([])
+  const [loading, setLoading] = useState(true)
 
-  if (error) {
-    console.error("Error fetching subjects:", error)
+  // Fetch subjects from Supabase
+  useEffect(() => {
+    async function fetchSubjects() {
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from("subjects")
+        .select("*")
+        .order("semester", { ascending: true })
+        .order("name", { ascending: true })
+
+      if (error) {
+        console.error("Error fetching subjects:", error)
+      } else {
+        setSubjects(data as Subject[])
+      }
+      setLoading(false)
+    }
+
+    fetchSubjects()
+  }, [])
+
+  // Delete subject with confirmation
+  const handleDelete = async (id: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this subject?")
+    if (!confirmed) return
+
+    const supabase = await createClient()
+    const { error } = await supabase.from("subjects").delete().eq("id", id)
+    if (error) {
+      alert("Failed to delete subject: " + error.message)
+    } else {
+      setSubjects((prev) => prev.filter((subj) => subj.id !== id))
+    }
   }
 
   // Group subjects by semester
   const subjectsBySemester =
-    subjects?.reduce(
-      (acc, subject) => {
-        const semester = subject.semester
-        if (!acc[semester]) {
-          acc[semester] = []
-        }
-        acc[semester].push(subject)
-        return acc
-      },
-      {} as Record<number, typeof subjects>,
-    ) || {}
+    subjects.reduce((acc, subject) => {
+      if (!acc[subject.semester]) acc[subject.semester] = []
+      acc[subject.semester].push(subject)
+      return acc
+    }, {} as Record<number, Subject[]>) || {}
+
+  if (loading) return <p>Loading subjects...</p>
 
   return (
     <div className="space-y-6">
@@ -56,7 +89,7 @@ export default async function AdminSubjectsPage() {
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{subjects?.length || 0}</div>
+            <div className="text-2xl font-bold">{subjects.length}</div>
           </CardContent>
         </Card>
         <Card>
@@ -80,7 +113,7 @@ export default async function AdminSubjectsPage() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-2xl font-bold text-foreground">Semester {semester}</h2>
                   <Badge variant="outline">
-                    {semesterSubjects.length} subject{semesterSubjects.length !== 1 ? 's' : ''}
+                    {semesterSubjects.length} subject{semesterSubjects.length !== 1 ? "s" : ""}
                   </Badge>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -105,11 +138,13 @@ export default async function AdminSubjectsPage() {
                                 <Edit className="h-4 w-4" />
                               </Button>
                             </Link>
-                            <form action={`/api/admin/subjects/${subject.id}/delete`} method="POST">
-                              <Button variant="ghost" size="sm" type="submit">
-                                <Trash2 className="h-4 w-4 text-destructive" />
-                              </Button>
-                            </form>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(subject.id)}
+                            >
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
                           </div>
                         </div>
                       </CardHeader>

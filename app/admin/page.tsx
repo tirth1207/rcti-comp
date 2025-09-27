@@ -19,14 +19,14 @@ export default async function AdminDashboard() {
     { count: newsletterCount },
     { count: materialCount },
     { count: eventCount },
-    { count: feedbackCount },
+    { count: subjectsCount },
     { count: facultyCount },
     { count: noticeCount },
   ] = await Promise.all([
     supabase.from("newsletters").select("*", { count: "exact", head: true }),
-    supabase.from("course_materials").select("*", { count: "exact", head: true }),
+    supabase.from("resources").select("*", { count: "exact", head: true }),
     supabase.from("events").select("*", { count: "exact", head: true }),
-    supabase.from("feedback").select("*", { count: "exact", head: true }),
+    supabase.from("subjects").select("*", { count: "exact", head: true }),
     supabase.from("faculty").select("*", { count: "exact", head: true }),
     supabase.from("students_corner").select("*", { count: "exact", head: true }),
   ])
@@ -51,7 +51,7 @@ export default async function AdminDashboard() {
       title: "Course Materials",
       count: materialCount || 0,
       icon: BookOpen,
-      href: "/admin/course-materials",
+      href: "/admin/subjects",
       color: "text-green-600",
       description: "Uploaded materials",
     },
@@ -80,12 +80,12 @@ export default async function AdminDashboard() {
       description: "Published notices",
     },
     {
-      title: "Feedback",
-      count: feedbackCount || 0,
+      title: "Subjects",
+      count: subjectsCount || 0,
       icon: MessageSquare,
-      href: "/admin/feedback",
+      href: "/admin/subjects",
       color: "text-indigo-600",
-      description: "Student feedback",
+      description: "Total subjects",
     },
   ]
 
@@ -134,17 +134,17 @@ export default async function AdminDashboard() {
             </CardTitle>
             <CardDescription>Frequently used administrative tasks</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-3 gap-6">
             <Link href="/admin/newsletters/new">
               <Button variant="outline" className="w-full justify-start bg-transparent">
                 <FileText className="h-4 w-4 mr-2" />
                 Add New Newsletter
               </Button>
             </Link>
-            <Link href="/admin/course-materials/new">
+            <Link href="/admin/subject/new">
               <Button variant="outline" className="w-full justify-start bg-transparent">
                 <BookOpen className="h-4 w-4 mr-2" />
-                Upload Course Material
+                Upload Subject
               </Button>
             </Link>
             <Link href="/admin/events/new">

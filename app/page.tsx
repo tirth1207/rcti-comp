@@ -15,8 +15,9 @@ import {
   Sparkles,
 } from "lucide-react"
 import { Hero } from "@/components/hero"
-import { Feature74 } from "@/components/vision"
-import { Feature16 } from "@/components/mission"
+import { Vision } from "@/components/vision"
+import { Mission } from "@/components/mission"
+import  NewsTicker  from "@/components/news-ticker"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -142,18 +143,18 @@ export default async function HomePage() {
                 key={index}
                 className={`group hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-border/50 hover:border-primary/20 hover:-translate-y-1 bg-card/50 backdrop-blur ${link.borderColor}`}
               >
-                <CardHeader className="pb-4">
+                <CardHeader className="pb-1">
                   <div
-                    className={`w-14 h-14 rounded-xl ${link.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-12 h-12 rounded-xl ${link.bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
                   >
                     <link.icon className={`h-7 w-7 ${link.color}`} />
                   </div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors duration-200">
+                  <CardTitle className="text-lg my-2group-hover:text-primary transition-colors duration-200">
                     {link.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="mb-6 text-muted-foreground leading-relaxed">
+                  <CardDescription className="mb-4 text-muted-foreground leading-relaxed">
                     {link.description}
                   </CardDescription>
                   <Link href={link.href}>
@@ -208,8 +209,11 @@ export default async function HomePage() {
       </section>
 
       {/* Vision & Mission */}
-      <Feature74 />
-      <Feature16 />
+      <Vision />
+      <Mission />
+
+
+      <NewsTicker/>
 
       {newsletters && newsletters.length > 0 && (
         <section className="py-16 bg-muted/30 relative overflow-hidden">

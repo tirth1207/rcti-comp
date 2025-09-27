@@ -32,7 +32,7 @@ export default function NewStudentCornerPage() {
       if (!user) throw new Error("User not authenticated");
 
       // Insert student-corner item
-      const { error } = await supabase.from("student_corner").insert([
+      const { error } = await supabase.from("students_corner").insert([
         {
           title: title.trim(),
           description: description.trim() || null,
