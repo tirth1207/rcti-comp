@@ -55,11 +55,11 @@ export function Navigation() {
       description: "Stay updated with department news",
       href: "/newsletter",
     },
-    {
-      title: "Feedback",
-      description: "Share your thoughts and suggestions",
-      href: "/feedback",
-    },
+    // {
+    //   title: "Feedback",
+    //   description: "Share your thoughts and suggestions",
+    //   href: "/feedback",
+    // },
     {
       title: "About",
       description: "Learn more about our department",
@@ -199,10 +199,10 @@ export function Navigation() {
                     className={cn(
                       navigationMenuTriggerStyle(),
                       "hover:bg-accent hover:text-accent-foreground transition-all duration-200",
-                      pathname === "/contact" && "bg-accent/50 text-accent-foreground",
+                      pathname === "/feedback" && "bg-accent/50 text-accent-foreground",
                     )}
                   >
-                    Contact
+                    Feedback
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -214,13 +214,13 @@ export function Navigation() {
             <ThemeToggle />
 
             <div className="hidden lg:block">
-              <Link href="/auth/login">
+              <Link href="/contact">
                 <Button
                   variant="outline"
                   size="sm"
                   className="hover:bg-primary hover:text-primary-foreground transition-all duration-200 bg-transparent"
                 >
-                  Admin Login
+                  Contact
                 </Button>
               </Link>
             </div>
@@ -297,7 +297,7 @@ export function Navigation() {
                     Contact
                   </Link>
 
-                  <div className="pt-4 border-t border-border/50">
+                  {/* <div className="pt-4 border-t border-border/50">
                     <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
                       <Button
                         variant="outline"
@@ -306,7 +306,7 @@ export function Navigation() {
                         Admin Login
                       </Button>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </SheetContent>
             </Sheet>
