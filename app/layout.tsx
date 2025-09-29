@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Computer Department - RCTI",
     description:
       "Official website of the Computer Engineering Department at RCTI, featuring academic programs, resources, and events.",
-    url: "https://v0-computer-department-website-eazl.vercel.app",
+    url: "https://rcti-comp.vercel.app",
     siteName: "RCTI Computer Department",
     images: [
       {
@@ -74,9 +74,9 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://v0-computer-department-website-eazl.vercel.app",
+    canonical: "https://rcti-comp.vercel.app",
   },
-  metadataBase: new URL("https://v0-computer-department-website-eazl.vercel.app"),
+  metadataBase: new URL("https://rcti-comp.vercel.app"),
   category: "Education",
 };
 
@@ -97,8 +97,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "CollegeOrUniversity",
               name: "RCTI - Computer Department",
-              url: "https://v0-computer-department-website-eazl.vercel.app",
-              logo: "https://v0-computer-department-website-eazl.vercel.app/RCTI_Logo.png",
+              url: "https://rcti-comp.vercel.app",
+              logo: "https://rcti-comp.vercel.app/RCTI_Logo.png",
               sameAs: [
                 "https://www.facebook.com/yourpage",
                 "https://twitter.com/yourhandle",
