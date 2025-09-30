@@ -18,6 +18,7 @@ import { Hero } from "@/components/hero"
 import { Vision } from "@/components/vision"
 import { Mission } from "@/components/mission"
 import  NewsTicker  from "@/components/news-ticker"
+import { MarqueeDemo } from "@/components/testimonial"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -279,6 +280,8 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      <MarqueeDemo />
     </div>
   )
 }

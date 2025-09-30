@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { GraduationCap, Menu, X, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -211,8 +212,8 @@ export function Navigation() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-3">
-            <ThemeToggle />
-
+            {/* <ThemeToggle /> */}
+            <AnimatedThemeToggler />
             <div className="hidden lg:block">
               <Link href="/contact">
                 <Button
@@ -239,10 +240,10 @@ export function Navigation() {
                     <GraduationCap className="h-6 w-6 text-primary" />
                     Navigation
                   </SheetTitle>
-                </SheetHeader>
+                </SheetHeader> 
                 <div className="mt-6 space-y-4">
                   <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="course-materials" className="border-border/50">
+                    <AccordionItem value="course-materials" className="border-border/50 px-3 py-2 rounded-md hover:text-accent-foreground transition-colors">
                       <AccordionTrigger className="text-sm font-medium hover:text-primary transition-colors">
                         Course Materials
                       </AccordionTrigger>
@@ -262,7 +263,7 @@ export function Navigation() {
                       </AccordionContent>
                     </AccordionItem>
 
-                    <AccordionItem value="academic" className="border-border/50">
+                    <AccordionItem value="academic" className="border-border/50 px-3 py-2 rounded-md hover:text-accent-foreground transition-colors">
                       <AccordionTrigger className="text-sm font-medium hover:text-primary transition-colors">
                         Academic
                       </AccordionTrigger>
