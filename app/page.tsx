@@ -280,8 +280,9 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      <MarqueeDemo />
+      <div className="py-16 bg-muted/30 relative overflow-hidden">
+        <div className="w-56 mx-auto"><MarqueeDemo /></div>
+      </div>
     </div>
   )
 }
