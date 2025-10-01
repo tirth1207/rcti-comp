@@ -281,7 +281,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* <MarqueeDemo /> */}
+      <MarqueeDemo />
     </div>
   )
 }
