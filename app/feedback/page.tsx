@@ -11,11 +11,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { MessageSquare, Send } from "lucide-react"
 import { useRouter } from "next/navigation"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function FeedbackPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
+  const [category,setCategory] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const router = useRouter()
@@ -31,6 +39,7 @@ export default function FeedbackPage() {
         {
           name,
           email,
+          category,
           message,
         },
       ])
@@ -40,6 +49,7 @@ export default function FeedbackPage() {
       setSubmitted(true)
       setName("")
       setEmail("")
+      setCategory("")
       setMessage("")
     } catch (error) {
       console.error("Error submitting feedback:", error)
@@ -118,6 +128,25 @@ export default function FeedbackPage() {
                   placeholder="Enter your email address"
                   required
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Category</Label>
+                 <Select value={category} onValueChange={(value) => setCategory(value)}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Category of Feedback" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="review">Review</SelectItem>
+                    <SelectItem value="inquiry">Inquiry</SelectItem>
+                    <SelectItem value="suggestions">Suggestions</SelectItem>
+                    <SelectItem value="technical_issue">Technical Issues</SelectItem>
+                    <SelectItem value="rfi">Requests for Information</SelectItem>
+                    <SelectItem value="content_accuracy">Feedback on Content Accuracy</SelectItem>
+                    <SelectItem value="experience">User Experience Feedback</SelectItem>
+                    <SelectItem value="event_feedback">Event Feedback</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
