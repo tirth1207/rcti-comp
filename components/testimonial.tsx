@@ -9,9 +9,11 @@ type Feedback = {
   id: string
   name: string
   email: string
+  category: string   // added category here
   message: string
   created_at: string
 }
+
 
 const ReviewCard = ({ name, email, message }: Feedback) => {
   return (
@@ -41,6 +43,7 @@ export function MarqueeDemo() {
       const { data: feedback, error } = await supabase
         .from("feedback")
         .select("*")
+        .eq("category", "review")
         .order("created_at", { ascending: true })
 
       if (error) {
