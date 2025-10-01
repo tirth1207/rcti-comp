@@ -49,6 +49,7 @@ const data = {
     { title: "Events", url: "/admin/events", icon: Calendar },
     { title: "Faculty", url: "/admin/faculty", icon: Users },
     { title: "Feedback", url: "/admin/feedback", icon: MessageSquare },
+    { title: "Contact", url: "/admin/contact", icon: LifeBuoy },
   ],
 }
 

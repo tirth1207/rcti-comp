@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { MapPin, Phone, Clock } from "lucide-react"
+import ContactForm from "@/components/contact-form"
 
 // Add these styles at the top or import them from a CSS file
 const mapStyles = `
@@ -127,7 +128,7 @@ export default function ContactPage() {
               </Card>
 
               <Card>
-                <CardHeader>
+                {/* <CardHeader>
                   <CardTitle className="text-2xl">Send us a Message</CardTitle>
                   <CardDescription>
                     Have a question or inquiry? Fill out the form below and we'll get back to you as soon as possible.
@@ -165,7 +166,8 @@ export default function ContactPage() {
                       Send Message
                     </Button>
                   </form>
-                </CardContent>
+                </CardContent> */}
+                <ContactForm />
               </Card>
             </div>
           </div>
