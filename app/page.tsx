@@ -281,7 +281,18 @@ export default async function HomePage() {
         </section>
       )}
       <div className="py-16 bg-muted/30 relative overflow-hidden">
-        <div className="w-56 mx-auto"><MarqueeDemo /></div>
+        <div className="text-center mb-12">
+          <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">
+                Our Reviews
+              </Badge>
+              <h2 className="text-3xl font-bold text-foreground mb-4 text-balance">What People Are Saying</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
+                 Hear from students and visitors about their experiences with our department.
+              </p>
+        </div>
+        <div className="w-2/3 mx-auto">
+          <MarqueeDemo />
+        </div>
       </div>
     </div>
   )
