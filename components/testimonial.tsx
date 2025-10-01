@@ -41,12 +41,14 @@ export function MarqueeDemo() {
       const { data: feedback, error } = await supabase
         .from("feedback")
         .select("*")
-        .order("created_at", { ascending: false })
+        .order("created_at", { ascending: true })
 
       if (error) {
         console.error("Error fetching feedback:", error)
         return
       }
+
+      console.log("Fetched feedback:", feedback)
 
       if (feedback) {
         const mid = Math.ceil(feedback.length / 2)
