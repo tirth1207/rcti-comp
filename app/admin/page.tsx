@@ -136,31 +136,31 @@ export default async function AdminDashboard() {
           </CardHeader>
           <CardContent className="space-y-3 gap-6">
             <Link href="/admin/newsletters/new">
-              <Button variant="outline" className="w-full justify-start bg-transparent">
+              <Button variant="outline" className="w-full justify-start bg-transparent mb-2">
                 <FileText className="h-4 w-4 mr-2" />
                 Add New Newsletter
               </Button>
             </Link>
             <Link href="/admin/subject/new">
-              <Button variant="outline" className="w-full justify-start bg-transparent">
+              <Button variant="outline" className="w-full justify-start bg-transparent mb-2">
                 <BookOpen className="h-4 w-4 mr-2" />
                 Upload Subject
               </Button>
             </Link>
             <Link href="/admin/events/new">
-              <Button variant="outline" className="w-full justify-start bg-transparent">
+              <Button variant="outline" className="w-full justify-start bg-transparent mb-2">
                 <Calendar className="h-4 w-4 mr-2" />
                 Create New Event
               </Button>
             </Link>
             <Link href="/admin/faculty/new">
-              <Button variant="outline" className="w-full justify-start bg-transparent">
+              <Button variant="outline" className="w-full justify-start bg-transparent mb-2">
                 <Users className="h-4 w-4 mr-2" />
                 Add Faculty Member
               </Button>
             </Link>
             <Link href="/admin/student-corner/new">
-              <Button variant="outline" className="w-full justify-start bg-transparent">
+              <Button variant="outline" className="w-full justify-start bg-transparent mb-2">
                 <Bell className="h-4 w-4 mr-2" />
                 Post Student Notice
               </Button>

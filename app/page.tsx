@@ -280,7 +280,7 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-      <div className="py-16 bg-muted/30 relative overflow-visible">
+      <div className="py-16  relative overflow-visible">
         <div className="text-center mb-12">
           <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">
                 Our Reviews

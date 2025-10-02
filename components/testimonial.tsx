@@ -19,7 +19,7 @@ const ReviewCard = ({ name, email, message }: Feedback) => {
   return (
     <figure
       className={cn(
-        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)]",
+        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]",
         "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
         "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
       )}
@@ -28,7 +28,7 @@ const ReviewCard = ({ name, email, message }: Feedback) => {
         <figcaption className="text-sm font-medium dark:text-white">{name}</figcaption>
         <p className="text-xs font-medium dark:text-white/40">{email}</p>
       </div>
-      <blockquote className="mt-2 text-sm">{message}</blockquote>
+      <blockquote className="mt-2 text-sm  max-h-16 whitespace-pre-wrap">{message}</blockquote>
     </figure>
   )
 }
@@ -65,18 +65,18 @@ export function MarqueeDemo() {
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee pauseOnHover className="[--duration:20s] py-4 overflow-visible">
         {firstRow.map((review) => (
           <ReviewCard key={review.id} {...review} />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
+      <Marquee reverse pauseOnHover className="[--duration:20s] py-4 overflow-visible">
         {secondRow.map((review) => (
           <ReviewCard key={review.id} {...review} />
         ))}
       </Marquee>
 
-      <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r" />
+      <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"  />
       <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l" />
     </div>
   )
