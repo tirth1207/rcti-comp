@@ -5,6 +5,7 @@ import { AdminNavigation } from "@/components/admin-navigation"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from
  "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { ParamsBreadcrumb } from "@/components/dynamic-breadcrumb"
 
 export default async function AdminLayout({
   children,
@@ -31,8 +32,12 @@ export default async function AdminLayout({
       <div className="">
         <main className="py-6">
           <div className="px-4 sm:px-6 lg:px-8">
-      <SidebarTrigger className="-ml-1" />
-{children}</div>
+            <div className="mb-4 flex flex-row items-center gap-4">
+              <SidebarTrigger className="-ml-1" />
+              <ParamsBreadcrumb />
+            </div>
+            {children}
+          </div>
         </main>
       </div>
       </SidebarInset>
