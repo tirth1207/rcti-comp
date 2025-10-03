@@ -8,10 +8,10 @@ export default async function EventsPage() {
   const supabase = await createClient()
   const { data: events, error } = await supabase.from("events").select("*").order("created_at", { ascending: false })
 
+
   if (error) {
     console.error("Error fetching events:", error)
   }
-
   return (
     <div className="space-y-6">
       {/* Header */}

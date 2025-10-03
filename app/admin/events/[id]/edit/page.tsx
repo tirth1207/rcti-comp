@@ -23,8 +23,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
   const [description, setDescription] = useState("")
   const [date, setDate] = useState("")
   const [location, setLocation] = useState("")
-  const [imageUrl, setImageUrl] = useState("");
-  const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([""])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
@@ -33,7 +32,11 @@ export default function EditEventPage({ params }: EditEventPageProps) {
     const loadEvent = async () => {
       const supabase = createClient()
 
-      const { data, error } = await supabase.from("events").select("*").eq("id", params.id).single()
+      const { data, error } = await supabase
+        .from("events")
+        .select("*")
+        .eq("id", params.id)
+        .single()
 
       if (error) {
         console.error("Error loading event:", error)
@@ -45,43 +48,53 @@ export default function EditEventPage({ params }: EditEventPageProps) {
       setDescription(data.description || "")
       setDate(data.date ? new Date(data.date).toISOString().split("T")[0] : "")
       setLocation(data.location || "")
-  setCurrentImageUrl(data.image_url)
-  setImageUrl(data.image_url || "")
+      setImages(data.images && data.images.length > 0 ? data.images : [""])
       setIsLoading(false)
     }
 
     loadEvent()
   }, [params.id, router])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleImageUrlChange = (idx: number, value: string) => {
+    setImages((prev) => {
+      const arr = [...prev]
+      arr[idx] = value
+      return arr
+    })
+  }
 
-    const supabase = createClient();
+  const addImageField = () => setImages((prev) => [...prev, ""])
+  const removeImageField = (idx: number) =>
+    setImages((prev) => (prev.length > 1 ? prev.filter((_, i) => i !== idx) : prev))
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const supabase = createClient()
 
     try {
-      // Update event with image URL only
       const { error } = await supabase
         .from("events")
         .update({
-          title,
-          description,
-          date: date ? new Date(date).toISOString() : null,
-          location,
-          image_url: imageUrl || null,
+          title: title.trim(),
+          description: description.trim() || null,
+          date: date ? new Date(date).toISOString().split("T")[0] : null,
+          location: location.trim() || null,
+          images: images.filter((url) => url.trim() !== ""),
         })
-        .eq("id", params.id);
+        .eq("id", params.id)
 
-      if (error) throw error;
+      if (error) throw error
 
-      router.push("/admin/events");
+      router.push("/admin/events")
     } catch (error) {
-      console.error("Error updating event:", error);
-      alert("There was an error updating the event. Please try again.");
+      console.error("Error updating event:", error)
+      alert("There was an error updating the event. Please try again.")
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (isLoading) {
     return (
@@ -148,28 +161,52 @@ export default function EditEventPage({ params }: EditEventPageProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl">Event Image URL (Google Drive or direct link)</Label>
+              <Label htmlFor="date">Event Date</Label>
               <Input
-                id="imageUrl"
-                type="url"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://drive.google.com/file/d/.../view"
+                id="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               />
-              {currentImageUrl && (
-                <p className="text-sm text-muted-foreground">
-                  Current image: {" "}
-                  <a
-                    href={currentImageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    View current image
-                  </a>
-                </p>
-              )}
-              <p className="text-sm text-muted-foreground">Paste a Google Drive or direct image link to replace the current one (optional)</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="location">Location</Label>
+              <Input
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter event location"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Event Image URLs (Google Drive or direct links)</Label>
+              {images.map((url, idx) => (
+                <div key={idx} className="flex space-x-2 mb-2">
+                  <Input
+                    type="url"
+                    value={url}
+                    onChange={(e) => handleImageUrlChange(idx, e.target.value)}
+                    placeholder="https://drive.google.com/file/d/.../view"
+                  />
+                  {images.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => removeImageField(idx)}
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </div>
+              ))}
+              <Button type="button" variant="outline" onClick={addImageField}>
+                Add Another Image
+              </Button>
+              <p className="text-sm text-muted-foreground">
+                Paste one or more Google Drive or direct image links (optional)
+              </p>
             </div>
 
             <div className="flex space-x-4">
@@ -184,7 +221,9 @@ export default function EditEventPage({ params }: EditEventPageProps) {
                 )}
               </Button>
               <Link href="/admin/events">
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" type="button">
+                  Cancel
+                </Button>
               </Link>
             </div>
           </form>
