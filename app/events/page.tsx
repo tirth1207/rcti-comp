@@ -2,11 +2,15 @@ import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Camera } from "lucide-react"
 import Image from "next/image"
+import { EventCarousel } from "@/components/carousel"
 
 export default async function EventsPage() {
   const supabase = await createClient()
 
-  const { data: events, error } = await supabase.from("events").select("*").order("created_at", { ascending: false })
+  const { data: events, error } = await supabase
+    .from("events")
+    .select("*")
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching events:", error)
@@ -26,15 +30,10 @@ export default async function EventsPage() {
         {events && events.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
-              <Card key={event.id} className="h-full overflow-hidden">
+              <Card key={event.id} className="h-full overflow-hidden pb-6 pt-0">
                 <div className="aspect-video bg-card relative">
                   {event.images && event.images.length > 0 ? (
-                    <Image
-                      src={event.images[0] || "/placeholder.svg"}
-                      alt={event.title}
-                      fill
-                      className="object-cover"
-                    />
+                    <EventCarousel images={event.images} title={event.title} />
                   ) : (
                     <div className="flex items-center justify-center h-full">
                       <Camera className="h-12 w-12 text-muted-foreground" />
